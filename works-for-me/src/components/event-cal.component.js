@@ -5,8 +5,9 @@ import Calendar from "./Calendar"
 import Calendar2 from "./Calendar2"
 import DatePicker from "react-datepicker"
 
-import {Paper, Button, Typography} from "@material-ui/core"
+import {Paper, Button, Typography, Mui} from "@material-ui/core"
 import createEvent from './create-event.component'
+
 
 const Friend = props => (
     <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -19,15 +20,18 @@ const buttonStyle = {
     borderColor: "black"
 };
 
+
+
 export default class EventList extends Component {
     
     constructor(props){
         super(props);
-
+        
         this.deleteFriends = this.deleteFriends.bind(this);
-
+        
         this.state = {friends: []};
     }
+   
     
     componentDidMount() {
         axios.get('http://localhost:5000/users/')
@@ -74,7 +78,7 @@ export default class EventList extends Component {
 
 
                         <div class="col-2 container-fluid">
-                            <Paper variant = "outlined">
+                            <Paper variant = "outlined" >
                             <Typography variant = "h6" align = "center">Add an Event</Typography>
                            
                                 <form>

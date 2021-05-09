@@ -34,8 +34,8 @@ export default function(){
     const calendarRef = useRef(null);
     
     const onEventAdded = event=>{
-        console.log("added!!!!!!!!!!!");
-        let calendarApi = this.calendarRef.current.getApi()
+        //TODO: we can do an axsios call
+        let calendarApi = calendarRef.current.getApi()
         calendarApi.addEvent(event);
     } 
 
@@ -43,7 +43,7 @@ export default function(){
    
     return (
         
-        <Paper variant = "outlined" >
+        <Paper variant = "outlined"  className = {classes.paper}>
             <button onClick={()=> setModalOpen(true)}>Add Event</button>
             <div style={{position:"relative", zIndex:0}}>
                 <FullCalendar className = {classes.FullCalendar}
@@ -51,7 +51,7 @@ export default function(){
                     plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin, googleCalendarPlugin,bootstrapPlugin, listPlugin]}
                     themeSystem = "bootstrap"
                     // initialView = "dayGridMonth"
-                    aspectRatio = "1.55"
+                    aspectRatio = "1.4"
                     headerToolbar={{
                         left: "prev,next today",
                         center: "title",
@@ -63,13 +63,14 @@ export default function(){
                     eventBorderColor = "purple"
                     background-color = "#24467d"
                     
+                    
                     // weekNumbers = {true}
                     
                     selectable = {true}
                     editable = {true}
                     unselectAuto = {true}
                     weekends = {true}         
-                    // navLinks ={true}
+                    navLinks ={true}
                 
             
                     googleCalendarApiKey= 'AIzaSyA7ILoMzctHVI16y1LWaTPUKlMp1sWcT_Q'
@@ -81,11 +82,11 @@ export default function(){
                 />
             </div>
             
-                  {/* <AddEventModal 
+                  <AddEventModal 
                     isOpen={modalOpen} 
                     onClose={() => setModalOpen(false)}
                     onEventAdded={event => onEventAdded(event)}
-                /> */}
+                />
         </Paper>
               
            
