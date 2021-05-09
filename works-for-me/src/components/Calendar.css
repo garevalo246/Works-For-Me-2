@@ -1,0 +1,17 @@
+body {
+  background-color: white;
+  font-family: "Trebuchet Arial", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  border-color: black;
+}
+
+.fc .fc-content {
+  background-color: #000;
+  color-adjust: black;
+}
+
+table,
+th,
+td {
+  border: 1px solid rgb(180, 179, 179);
+}

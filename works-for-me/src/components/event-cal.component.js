@@ -1,20 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Calendar from "./Calendar"
+import Calendar2 from "./Calendar2"
+import DatePicker from "react-datepicker"
+
+import {Paper, Button, Typography} from "@material-ui/core"
 import createEvent from './create-event.component'
 
 const Friend = props => (
-    <tr>
-      <td>{props.user.username}</td>
-      <td>
-        {/* <Link to={"/edit/"+props.user._id}>edit</Link> |  */}
-        <a href="#" onClick={() => { props.deleteFriends(props.user._id) }}>delete</a>
-      </td>
-    </tr>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {props.user.username}
+        <a  class="btn btn-primary"  href="#" onClick={() => { props.deleteFriends(props.user._id) }}>Remove friend</a>
+    </li>
   )
+const buttonStyle = {
+    color: "black",
+    borderColor: "black"
+};
 
 export default class EventList extends Component {
+    
     constructor(props){
         super(props);
 
@@ -22,6 +28,7 @@ export default class EventList extends Component {
 
         this.state = {friends: []};
     }
+    
     componentDidMount() {
         axios.get('http://localhost:5000/users/')
         .then(response => {
@@ -49,63 +56,99 @@ export default class EventList extends Component {
     render(){
         return (
             <div>
-                <p>Your Calendar</p>
-                {/* calendar part */}
                 <div class="container-fluid">
                     <div class="row">
-                    <div class="col">
-                        {/* <form>
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">Email address</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Example select</label>
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect2">Example multiple select</label>
-                                <select multiple class="form-control" id="exampleFormControlSelect2">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Example textarea</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
-                        </form> */}
-                    </div>
-                    <div class="col-7">
-                        <Calendar className=""/>
-                    </div>
-                    <div class="col">
-                        <div>
-                            <h3>Logged friends</h3>
-                            <table className="table">
-                            <thead className="thead-light">
-                                <tr>
-                                <th>Username</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                { this.friendsList() }
-                            </tbody>
-                            </table>
+                        <div class="col-2 container-fluid">
+                            <Paper variant = "outlined" >
+                            <Typography variant = 'h6' align = "center">Friends List</Typography>
+                                <div class="list-group">
+                                    { this.friendsList() }
+                                </div>   
+                                
+                            </Paper>
                         </div>
+
+                        <div class="col-7 container-fluid">
+                        <Calendar/>
+                        </div>
+
+
+                        <div class="col-2 container-fluid">
+                            <Paper variant = "outlined">
+                            <Typography variant = "h6" align = "center">Add an Event</Typography>
+                           
+                                <form>
+                                    <div class = "col-12 container-fluid">
+                                        <Typography variant = "h7" >Title:</Typography>
+                                        <input  type="text"
+                                        required
+                                        className="form-control"
+                                        value={this.state.title}
+                                        onChange={this.onChangeTitle}
+                                        />
+                                    </div>
+                                    <br></br>
+
+                                    <div class = "col-12 container-fluid"  >
+                                        <Typography variant="h7">Description:</Typography>
+                                        <input  type="text"  
+                                        
+                                        className="form-control"
+                                        value={this.state.title}
+                                        onChange={this.onChangeTitle}
+                                        />
+                                    </div>
+                                    <br></br>
+
+                                    <div class = "col-12 container-fluid"> 
+                                        <Typography variant = "h7">From:
+                                        <DatePicker 
+                                        closeOnScroll = {true}
+                                        // value = {start}
+                                        // onChange={date=>setStart(date)}
+                                        timeInputLabel = "Time:"
+                                        dateFormat = "MM/dd/yyyy h:mm aa"
+                                        showTimeInput
+                                        placeholderText = "Start date"
+                                        />
+                                        </Typography>
+                                    </div>
+                                    <br></br>
+                                   
+
+                                    <div class = "col-12 container-fluid">
+                                        <Typography variant = "h7">To:
+                                        <DatePicker 
+                                        closeOnScroll = {true}
+                                        // value = {end}
+                                        // onChange={date=>setEnd(date)}
+                                        timeInputLabel = "Time:"
+                                        dateFormat = "MM/dd/yyyy h:mm aa"
+                                        showTimeInput
+                                        placeholderText = "End date"
+                                        />
+                                        </Typography>
+                                    </div>
+                                    <br></br>
+                                    <div class = "col-12 container-fluid" align = "center">
+                                        <span style = {buttonStyle}> </span>
+                                        <Button variant = "contained"
+                                        color = "secondary"
+                                        size = "small"
+                                        fullWidth = "true"
+                                        
+                                        >Submit Event</Button>
+                                        
+                                    </div>
+                                    <br></br>
+                                </form>
+                            </Paper>
+                        </div>                          
+                        
                     </div>
                     </div>
                 </div>
-            </div>
+            
         )
     }
 }
