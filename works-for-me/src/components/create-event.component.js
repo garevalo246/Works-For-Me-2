@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import {Paper, Typography} from '@material-ui/core'
-import Calendar from './Calendar';
+import {Paper} from '@material-ui/core'
 
 export default class CreateEvent extends Component {
     constructor(props){

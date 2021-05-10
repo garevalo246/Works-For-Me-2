@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route,} from "react-router-dom";
 
 import Navbar from "./components/navbar.component"
 import EventList from "./components/event-cal.component";
-import EditEvent from "./components/edit-event.component";
 import CreateEvent from "./components/create-event.component";
 import CreateUser from "./components/create-user.component";
 import Modal from "react-modal"

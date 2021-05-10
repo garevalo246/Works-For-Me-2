@@ -1,12 +1,10 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Calendar from "./Calendar"
-import Calendar2 from "./Calendar2"
-import DatePicker from "react-datepicker"
 
-import {Paper, Button, Typography, Mui} from "@material-ui/core"
-import createEvent from './create-event.component'
+
+import {Paper, Typography} from "@material-ui/core"
 
 
 const Friend = props => (
@@ -15,25 +13,35 @@ const Friend = props => (
         <div  class="btn-group btn-group-toggle" data-toggle="buttons">
             <button 
              name="options" id="option2" autocomplete="off"
-            // style = {buttonStyle}
+            class="btn btn-primary btn-sm"       
+            >Propose Event</button>
+            <button 
+             name="options" id="option1" autocomplete="off"
+            class="btn btn-primary btn-sm"
+            color = "secondary"              
+            onClick={() => { props.deleteFriends(props.user._id) }}
+            >Remove</button>
+        </div>
+    </li>
+  )
+
+  const Event = props => (
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {props.name.title}
+        <div  class="btn-group btn-group-toggle" data-toggle="buttons">
+            <button 
+             name="options" id="option2" autocomplete="off"
             class="btn btn-primary btn-sm"       
             >Edit Event</button>
             <button 
              name="options" id="option1" autocomplete="off"
-            // style = {buttonStyle}
             class="btn btn-primary btn-sm"
             color = "secondary"              
-            onClick={() => { props.deleteFriends(props.user._id) }}
-            >Remove friend</button>
+            onClick={() => { props.deleteEvents(props.name._id) }}
+            >Remove</button>
         </div>
     </li>
   )
-const buttonStyle = {
-    color: "black",
-    borderColor: "black"
-};
-
-
 
 export default class EventList extends Component {
     
@@ -41,15 +49,36 @@ export default class EventList extends Component {
         super(props);
         
         this.deleteFriends = this.deleteFriends.bind(this);
+        this.deleteEvents = this.deleteEvents.bind(this);
         
-        this.state = {friends: []};
+        this.state = {friends: [], events:[]};
     }
-   
     
     componentDidMount() {
+        // get users
+        this.getUsers();
+        // get events
+        this.getEvents();
+    }
+
+    reloadPage = () => {
+        window.location.reload()
+    }
+
+    getUsers = () =>{
         axios.get('http://localhost:5000/users/')
         .then(response => {
           this.setState({ friends: response.data })
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+
+    getEvents = () =>{
+        axios.get('http://localhost:5000/event/')
+        .then(response => {
+          this.setState({ events: response.data })
         })
         .catch((error) => {
           console.log(error);
@@ -63,19 +92,40 @@ export default class EventList extends Component {
         this.setState({
             friends: this.state.friends.filter(el => el._id !== id)
         })
-      }
+    }
+
+    deleteEvents(id) {
+        axios.delete('http://localhost:5000/event/'+id)
+          .then(response => { console.log(response.data)});
+    
+        this.setState({
+            events: this.state.events.filter(el => el._id !== id)
+        })
+
+        // setTimeout(function () {
+            window.location.reload()
+        // }.bind(this), 10)
+    }
 
     friendsList() {
     return this.state.friends.map(currentfriend => {
        return <Friend user={currentfriend} deleteFriends={this.deleteFriends} key={currentfriend._id}/>;
     })
     }
+
+    eventsList() {
+        return this.state.events.map(currentEvent => {
+           return <Event name={currentEvent} deleteEvents={this.deleteEvents} key={currentEvent._id}/>;
+        })
+        }
+
     render(){
         return (
             <div>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-2">
+                            <div>
                             <Paper variant = "outlined" >
                             <Typography variant = 'h6' align = "center">Friends List</Typography>
                                 <div class="list-group">
@@ -83,8 +133,18 @@ export default class EventList extends Component {
                                 </div>   
                                 
                             </Paper>
+                            </div>
+                            <br></br>
+                            <div>
+                                <Paper variant = "outlined" >
+                                    <Typography variant = 'h6' align = "center">Events Added</Typography>
+                                    <div class="list-group">
+                                        { this.eventsList() }
+                                    </div>   
+                                    
+                                </Paper>
+                            </div>
                         </div>
-
                         <div class="col-10 ">
                         <Calendar/>
                         </div>

@@ -1,11 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import listPlugin from '@fullcalendar/list'
 import interactionPlugin from '@fullcalendar/interaction';
 import googleCalendarPlugin from '@fullcalendar/google-calendar';
-import {Paper,createMuiTheme, Card,Typography} from '@material-ui/core'
+import {Paper,createMuiTheme} from '@material-ui/core'
 import '../../node_modules/@fortawesome/fontawesome-free/css/all.css'
 
 import '@fullcalendar/bootstrap/main.css'
@@ -31,12 +31,9 @@ export default function(){
     
     theme.spacing(3)
 
-    const [modalOpen, setModalOpen] = useState(false);
-    const [events, setEvents] = useState({events: []})
     const calendarRef = useRef(null);
     
     const onEventAdded = event=>{
-        // console.log(loopData);
         //save to database
         axios.post('http://localhost:5000/event/add', event)
         .then(res => console.log(res.data));
@@ -44,46 +41,51 @@ export default function(){
         let calendarApi = calendarRef.current.getApi()
         calendarApi.addEvent(event);
     } 
+    const [events, setEvents] = useState([]);
 
-    const getData = componentDidMount => {
-        axios.get('http://localhost:5000/event/')
-        .then(response => {
-          setEvents({ events: response.data })
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    }
+    useEffect(() => {
+        axios.get('http://localhost:5000/event/').then(response => {
 
-    const loopData = eventsList=>{
-        return setEvents.events.map(element => {
-            return element;
-        });
-    }
+            const requiredDataFromResponse = response.data;
+            const data = requiredDataFromResponse.map(event => ({
+                start: event.start,
+                end: event.end,
+                title: event.title
+                
+            }));
+
+            setEvents(data);
+        })
+            .catch(error => { setEvents([]); })
+    }, []);
     
    
     return (
         <div>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-10">
+                    {/* calendar */}
+                    <div class="col-9">
                         <Paper variant = "outlined"  className = {classes.paper}>
                             <div style={{position:"relative", zIndex:0}}>
                                 <FullCalendar className = {classes.FullCalendar}
                                     ref ={calendarRef}
                                     plugins = {[dayGridPlugin, timeGridPlugin, interactionPlugin, googleCalendarPlugin,bootstrapPlugin, listPlugin]}
                                     themeSystem = "bootstrap"
-                                    aspectRatio = "1.60"
+                                    aspectRatio = "1.50"
                                     headerToolbar={{
-                                        left: "prev,next today",
+                                        left: "dayGridMonth timeGridWeek listDay",
                                         center: "title",
-                                        right: "dayGridMonth timeGridWeek listDay",
+                                        right: "prev,next today",
                                     }}
                                     
                                     windowResizeDelay = "200"
-                                    eventBackgroundColor  = "purple"
-                                    eventBorderColor = "purple"
-                                    background-color = "#24467d"
+                                    eventBackgroundColor  = "#cc3300"
+                                    //#cc3300
+                                    //#006699
+
+                                    eventBorderColor = "#cc3300"
+                                    background-color = "#cc3300"
                                     
                                     selectable = {true}
                                     editable = {true}
@@ -97,25 +99,15 @@ export default function(){
                                         {
                                             googleCalendarId: 'giovanniarevalo246@gmail.com',  
                                         },
-                                        [
-                                            {
-                                                title: 'Event1',
-                                                start: '2021-05-05',
-                                                end: '2021-05-05'
-                                            },
-                                            {
-                                                title: 'Event2',
-                                                start: '2021-05-05',
-                                                end: '2021-05-05'
-                                            }
-                                        ]
+                                        events
                                       ]} 
 
                                 />
                             </div>
                         </Paper>      
                     </div>
-                    <div class="col-2">
+                    {/* add event */}
+                    <div class="col-3">
                         <AddEventModal
                             onEventAdded={event => onEventAdded(event)}
                         />

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {Paper, Typography} from '@material-ui/core'
 
 export default class CreateUser extends Component {
     constructor(props){
@@ -37,22 +38,36 @@ export default class CreateUser extends Component {
     }
     render(){
         return (
-            <div>
-                <h3 class = "text-light">Add Friend</h3>
+            <div class = "container-fluid col-2">
+                <Paper>
+                <h3 class = "text-dark" align = "center">Add Friend</h3>
+
                 <form onSubmit={this.onSubmit}>
-                <div className="form-group"> 
-                    <label class = "text-light">Username: </label>
+                <div className="form-group" class = "container-fluid col-10"> 
+                    <Typography variant = "h6">Enter Username:</Typography>
+                    
                     <input  type="text"
                         required
                         className="form-control"
                         value={this.state.username}
                         onChange={this.onChangeUsername}
                         />
+                         <Typography variant = "h6">Enter Friend Code:</Typography>
+                    
+                    <input  type="text"
+                        
+                        className="form-control"
+                       
+                        />
                 </div>
-                <div className="form-group">
-                    <input type="submit" value="Create User" className="btn btn-primary" />
+                <br></br>
+                <div className="container-fluid col-12 form-group" align = "center">
+                    
+                    <input type="submit" value="add friend" className="btn btn-primary" />
                 </div>
+                <br></br>
                 </form>
+                </Paper>
             </div>
         )
     }
