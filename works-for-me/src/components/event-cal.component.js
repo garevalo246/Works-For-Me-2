@@ -12,7 +12,20 @@ import createEvent from './create-event.component'
 const Friend = props => (
     <li class="list-group-item d-flex justify-content-between align-items-center">
         {props.user.username}
-        <a  class="btn btn-primary"  href="#" onClick={() => { props.deleteFriends(props.user._id) }}>Remove friend</a>
+        <div  class="btn-group btn-group-toggle" data-toggle="buttons">
+            <button 
+             name="options" id="option2" autocomplete="off"
+            // style = {buttonStyle}
+            class="btn btn-primary btn-sm"       
+            >Edit Event</button>
+            <button 
+             name="options" id="option1" autocomplete="off"
+            // style = {buttonStyle}
+            class="btn btn-primary btn-sm"
+            color = "secondary"              
+            onClick={() => { props.deleteFriends(props.user._id) }}
+            >Remove friend</button>
+        </div>
     </li>
   )
 const buttonStyle = {
@@ -62,7 +75,7 @@ export default class EventList extends Component {
             <div>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-2 container-fluid">
+                        <div class="col-2">
                             <Paper variant = "outlined" >
                             <Typography variant = 'h6' align = "center">Friends List</Typography>
                                 <div class="list-group">
@@ -72,82 +85,9 @@ export default class EventList extends Component {
                             </Paper>
                         </div>
 
-                        <div class="col-7 container-fluid">
+                        <div class="col-10 ">
                         <Calendar/>
                         </div>
-
-
-                        <div class="col-2 container-fluid">
-                            <Paper variant = "outlined" >
-                            <Typography variant = "h6" align = "center">Add an Event</Typography>
-                           
-                                <form>
-                                    <div class = "col-12 container-fluid">
-                                        <Typography variant = "h7" >Title:</Typography>
-                                        <input  type="text"
-                                        required
-                                        className="form-control"
-                                        value={this.state.title}
-                                        onChange={this.onChangeTitle}
-                                        />
-                                    </div>
-                                    <br></br>
-
-                                    <div class = "col-12 container-fluid"  >
-                                        <Typography variant="h7">Description:</Typography>
-                                        <input  type="text"  
-                                        
-                                        className="form-control"
-                                        value={this.state.title}
-                                        onChange={this.onChangeTitle}
-                                        />
-                                    </div>
-                                    <br></br>
-
-                                    <div class = "col-12 container-fluid"> 
-                                        <Typography variant = "h7">From:
-                                        <DatePicker 
-                                        closeOnScroll = {true}
-                                        // value = {start}
-                                        // onChange={date=>setStart(date)}
-                                        timeInputLabel = "Time:"
-                                        dateFormat = "MM/dd/yyyy h:mm aa"
-                                        showTimeInput
-                                        placeholderText = "Start date"
-                                        />
-                                        </Typography>
-                                    </div>
-                                    <br></br>
-                                   
-
-                                    <div class = "col-12 container-fluid">
-                                        <Typography variant = "h7">To:
-                                        <DatePicker 
-                                        closeOnScroll = {true}
-                                        // value = {end}
-                                        // onChange={date=>setEnd(date)}
-                                        timeInputLabel = "Time:"
-                                        dateFormat = "MM/dd/yyyy h:mm aa"
-                                        showTimeInput
-                                        placeholderText = "End date"
-                                        />
-                                        </Typography>
-                                    </div>
-                                    <br></br>
-                                    <div class = "col-12 container-fluid" align = "center">
-                                        <span style = {buttonStyle}> </span>
-                                        <Button variant = "contained"
-                                        color = "secondary"
-                                        size = "small"
-                                        fullWidth = "true"
-                                        
-                                        >Submit Event</Button>
-                                        
-                                    </div>
-                                    <br></br>
-                                </form>
-                            </Paper>
-                        </div>                          
                         
                     </div>
                     </div>
