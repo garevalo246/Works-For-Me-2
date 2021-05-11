@@ -8,7 +8,8 @@ const buttonStyle = {
     borderColor: "white"
 };
 
-export default function({isOpen, onClose, onEventAdded}){
+export default function({ onEventAdded}){
+
     const classes = useStyles();
     const theme = createMuiTheme({
         spacing: 2,
@@ -24,6 +25,7 @@ export default function({isOpen, onClose, onEventAdded}){
     const refreshPage = () => {
         window.location.reload();
     }
+
     const onSubmit = (event) =>{
         event.preventDefault();
         
@@ -34,6 +36,7 @@ export default function({isOpen, onClose, onEventAdded}){
         })
         refreshPage()
     }
+
     return(
         <Paper variant = "outlined" className = {classes.Paper}>
             <Typography variant = "h6" align = "center">Add an Event</Typography>        
@@ -77,7 +80,7 @@ export default function({isOpen, onClose, onEventAdded}){
                         </Typography>
                     </div>
                     <br></br>
-                    <div class = "container-fluid col-12" align = "center" >
+                    <div class = "container-fluid col-12" align = "justify" >
                         <Typography variant = "h7">To:
                         <DatePicker 
                         closeOnScroll = {true}
@@ -96,7 +99,7 @@ export default function({isOpen, onClose, onEventAdded}){
                     <div class = "container-fluid col-12" align = "center">
                         <button className = {classes.buttonSubmit}
                         style = {buttonStyle}
-                        class="btn btn-primary"
+                        class="btn btn-success"
                         variant = "contained"
                         color = "primary"
                         size = "small"

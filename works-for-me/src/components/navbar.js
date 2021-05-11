@@ -35,11 +35,11 @@ export default class Navbar extends Component {
         <ul className="navbar-nav mr-auto">
           
           <li className="navbar-item">
-              <Link to="/create" className="nav-link">Find Time[           ]</Link>
+              <Link to="/create" className="nav-link">Find Time</Link>
           </li>
-          
+        
           <li className="navbar-item">
-              <Link to="/user" className="nav-link">Add Friend</Link>
+              <Link to="/user" className="nav-link">Add Friends</Link>
           </li>
         </ul>
         </div>

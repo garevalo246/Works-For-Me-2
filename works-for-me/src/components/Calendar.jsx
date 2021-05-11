@@ -19,7 +19,7 @@ import useStyles from './styles'
 import axios from 'axios';
 
 
-import AddEventModal from "./AddEventModal";
+import AddEvent from "./AddEvent";
 
 export default function(){
     
@@ -65,7 +65,7 @@ export default function(){
             <div class="container-fluid">
                 <div class="row">
                     {/* calendar */}
-                    <div class="col-9">
+                    <div class="col-10">
                         <Paper variant = "outlined"  className = {classes.paper}>
                             <div style={{position:"relative", zIndex:0}}>
                                 <FullCalendar className = {classes.FullCalendar}
@@ -107,8 +107,8 @@ export default function(){
                         </Paper>      
                     </div>
                     {/* add event */}
-                    <div class="col-3">
-                        <AddEventModal
+                    <div class="container-fluid col-2">
+                        <AddEvent
                             onEventAdded={event => onEventAdded(event)}
                         />
                     </div>

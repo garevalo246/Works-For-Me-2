@@ -1,10 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route,} from "react-router-dom";
 
-import Navbar from "./components/navbar.component"
-import EventList from "./components/event-cal.component";
-import CreateEvent from "./components/create-event.component";
-import CreateUser from "./components/create-user.component";
+import Navbar from "./components/navbar"
+import EventList from "./components/HomePage";
+import CreateEvent from "./components/FindTime";
+import CreateUser from "./components/AddFriend";
 import Modal from "react-modal"
 
 

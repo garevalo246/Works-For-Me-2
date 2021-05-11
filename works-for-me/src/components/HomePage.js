@@ -17,7 +17,7 @@ const Friend = props => (
             >Propose Event</button>
             <button 
              name="options" id="option1" autocomplete="off"
-            class="btn btn-primary btn-sm"
+            class="btn btn-danger btn-sm"
             color = "secondary"              
             onClick={() => { props.deleteFriends(props.user._id) }}
             >Remove</button>
@@ -35,7 +35,7 @@ const Friend = props => (
             >Edit Event</button>
             <button 
              name="options" id="option1" autocomplete="off"
-            class="btn btn-primary btn-sm"
+            class="btn btn-danger btn-sm"
             color = "secondary"              
             onClick={() => { props.deleteEvents(props.name._id) }}
             >Remove</button>
